@@ -26,6 +26,7 @@ public class QuizActivity extends AppCompatActivity {
     };
 
     private static final String TAG = "QuizActivity";
+    private static final String KEY_INDEX = "index";
 
     private int mCurrentIndex = 0;
 
@@ -34,6 +35,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_quiz);
+
 
 
 //        Definitions
@@ -83,25 +85,11 @@ public class QuizActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
-    }
-
-    // Actions
-    private void updateQuestion() {
-        int question = mQuestionRepository[mCurrentIndex].getTextResId();
-        mQuestionTextView.setText(question);
-    }
-
-    private void checkAnswer(boolean userPressedTrue) {
-        boolean answerTrue = mQuestionRepository[mCurrentIndex].isAnswerTrue();
-        int messageResId = 0;
-
-        if(userPressedTrue == answerTrue) {
-            messageResId = R.string.toast_correct;
-        } else {
-            messageResId = R.string.toast_incorrect;
+        
+        if(savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
         }
-
-        Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT).show();
+        updateQuestion();
     }
 
     @Override
@@ -132,5 +120,31 @@ public class QuizActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy() called");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
+    // Actions
+    private void updateQuestion() {
+        int question = mQuestionRepository[mCurrentIndex].getTextResId();
+        mQuestionTextView.setText(question);
+    }
+
+    private void checkAnswer(boolean userPressedTrue) {
+        boolean answerTrue = mQuestionRepository[mCurrentIndex].isAnswerTrue();
+        int messageResId = 0;
+
+        if(userPressedTrue == answerTrue) {
+            messageResId = R.string.toast_correct;
+        } else {
+            messageResId = R.string.toast_incorrect;
+        }
+
+        Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT).show();
     }
 }
