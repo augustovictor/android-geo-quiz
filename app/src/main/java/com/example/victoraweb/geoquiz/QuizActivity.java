@@ -65,7 +65,7 @@ public class QuizActivity extends AppCompatActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionRepository.length;
+//                mCurrentIndex = (mCurrentIndex + 1) % mQuestionRepository.length;
                 updateQuestion();
             }
         });
@@ -85,7 +85,7 @@ public class QuizActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
-        
+
         if(savedInstanceState != null) {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
         }
@@ -131,6 +131,7 @@ public class QuizActivity extends AppCompatActivity {
 
     // Actions
     private void updateQuestion() {
+        Log.d(TAG, "Updating question text for question #" + mCurrentIndex, new Exception());
         int question = mQuestionRepository[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
     }
