@@ -25,6 +25,8 @@ public class QuizActivity extends AppCompatActivity {
         new Question(R.string.question_asia, true)
     };
 
+    private Button mCheatButton;
+
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
 
@@ -43,6 +45,7 @@ public class QuizActivity extends AppCompatActivity {
         mFalseButton = (Button) findViewById(R.id.false_button);
         mNextButton = (ImageButton) findViewById(R.id.next_button);
         mPrevButton = (ImageButton) findViewById(R.id.previous_button);
+        mCheatButton = (Button) findViewById(R.id.cheat_button);
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         mQuestionTextView.setText(mQuestionRepository[mCurrentIndex].getTextResId());
 
@@ -83,6 +86,13 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionRepository.length;
                 updateQuestion();
+            }
+        });
+
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start cheatActivity
             }
         });
 
